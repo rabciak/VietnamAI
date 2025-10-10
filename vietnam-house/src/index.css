@@ -1,0 +1,62 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: 'Inter', 'Open Sans', system-ui, -apple-system, sans-serif;
+}
+
+
+
+@layer base {
+  :root {
+    /* Dark theme - Vietnam House brand colors */
+    --background: 0 0% 10%;           /* #1a1a1a - Dark background */
+    --foreground: 0 0% 98%;           /* #fafafa - Light text */
+    --card: 0 0% 12%;                 /* #1f1f1f - Card background */
+    --card-foreground: 0 0% 98%;      /* #fafafa - Card text */
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 357 81% 51%;           /* #E61E2B - Brand Red from logo */
+    --primary-foreground: 0 0% 100%;  /* White text on red */
+    --secondary: 166 73% 36%;         /* #1B9B7C - Teal/Green from logo */
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 63.9%;   /* #a3a3a3 - Muted gray */
+    --accent: 166 73% 36%;            /* Teal accent */
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 84.2% 60.2%;     /* Red for errors */
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;               /* #333333 - Border color */
+    --input: 0 0% 20%;
+    --ring: 357 81% 51%;              /* Brand red focus ring */
+    --chart-1: 357 81% 51%;
+    --chart-2: 166 73% 36%;
+    --chart-3: 154 48% 32%;
+    --chart-4: 0 0% 0%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+}
+
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
