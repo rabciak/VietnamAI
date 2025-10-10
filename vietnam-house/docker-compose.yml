@@ -1,0 +1,80 @@
+version: '3.8'
+
+services:
+  vietnamhouse:
+    # Service name
+    container_name: vietnamhouse
+
+    # Build from local Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    # Restart policy
+    restart: always
+
+    # No port exposure needed - Traefik handles all external traffic
+    # Internal port 80 is used by Traefik to route traffic
+
+    # Networks
+    networks:
+      - traefik-public
+
+    # Traefik labels for automatic configuration
+    labels:
+      # Enable Traefik for this container
+      - "traefik.enable=true"
+
+      # Docker network to use
+      - "traefik.docker.network=traefik-public"
+
+      # Service configuration
+      - "traefik.http.services.vietnamhouse.loadbalancer.server.port=80"
+
+      # ============ Router for vietnamhouse.net (root domain) ============
+      - "traefik.http.routers.vietnamhouse.rule=Host(`vietnamhouse.net`)"
+      - "traefik.http.routers.vietnamhouse.entrypoints=web,websecure"
+      - "traefik.http.routers.vietnamhouse.tls=true"
+      - "traefik.http.routers.vietnamhouse.tls.certresolver=mytlschallenge"
+
+      # ============ Router for www.vietnamhouse.net ============
+      - "traefik.http.routers.vietnamhouse-www.rule=Host(`www.vietnamhouse.net`)"
+      - "traefik.http.routers.vietnamhouse-www.entrypoints=web,websecure"
+      - "traefik.http.routers.vietnamhouse-www.tls=true"
+      - "traefik.http.routers.vietnamhouse-www.tls.certresolver=mytlschallenge"
+
+      # ============ Optional: Redirect www to non-www ============
+      # Uncomment the lines below if you want www to redirect to root domain
+      # - "traefik.http.middlewares.vietnamhouse-redirect.redirectregex.regex=^https://www\\.vietnamhouse\\.net/(.*)"
+      # - "traefik.http.middlewares.vietnamhouse-redirect.redirectregex.replacement=https://vietnamhouse.net/$${1}"
+      # - "traefik.http.middlewares.vietnamhouse-redirect.redirectregex.permanent=true"
+      # - "traefik.http.routers.vietnamhouse-www.middlewares=vietnamhouse-redirect"
+
+      # ============ Security Headers (optional but recommended) ============
+      - "traefik.http.middlewares.vietnamhouse-headers.headers.customResponseHeaders.X-Frame-Options=SAMEORIGIN"
+      - "traefik.http.middlewares.vietnamhouse-headers.headers.customResponseHeaders.X-Content-Type-Options=nosniff"
+      - "traefik.http.middlewares.vietnamhouse-headers.headers.customResponseHeaders.X-XSS-Protection=1; mode=block"
+      - "traefik.http.middlewares.vietnamhouse-headers.headers.customResponseHeaders.Referrer-Policy=strict-origin-when-cross-origin"
+      - "traefik.http.routers.vietnamhouse.middlewares=vietnamhouse-headers"
+      - "traefik.http.routers.vietnamhouse-www.middlewares=vietnamhouse-headers"
+
+    # Environment variables (if needed)
+    # environment:
+    #   - NODE_ENV=production
+
+    # Optional: Use .env file for environment variables
+    # env_file:
+    #   - .env
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+
+# External network created by Traefik
+networks:
+  traefik-public:
+    external: true

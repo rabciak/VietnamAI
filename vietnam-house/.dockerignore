@@ -1,0 +1,99 @@
+# ==========================================
+# Vietnam House - Docker Build Context
+# Exclude unnecessary files from build
+# ==========================================
+
+# ============ Dependencies ============
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ============ Build Output ============
+dist/
+build/
+.vite/
+
+# ============ Git ============
+.git/
+.gitignore
+.gitattributes
+
+# ============ IDE & Editors ============
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ============ Documentation ============
+README.md
+DEPLOYMENT.md
+DEPLOYMENT_GUIDE.md
+DEPLOYMENT_CHECKLIST.md
+PROJECT_ANALYSIS.md
+SECURITY_AUDIT.md
+ANALYSIS_SUMMARY.md
+QUICK_REFERENCE.md
+GIT_COMMIT_GUIDE.txt
+BACKGROUND_DOCUMENTATION.md
+CAROUSEL_DOCUMENTATION.md
+HERO_BACKGROUND_QUICKSTART.md
+IMAGE_OPTIMIZATION_GUIDE.md
+PRD.md
+CLAUDE.md
+*.md
+!package.json
+
+# ============ Testing ============
+coverage/
+test-results/
+playwright-report/
+playwright/.cache/
+tests/
+*.spec.js
+*.test.js
+playwright.config.js
+
+# ============ Environment & Secrets ============
+.env
+.env.*
+!.env.example
+
+# ============ Docker Files (don't copy into image) ============
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# ============ Logs ============
+*.log
+logs/
+
+# ============ Temporary Files ============
+*.tmp
+*.temp
+*.bak
+*.backup
+tmp/
+temp/
+
+# ============ OS Files ============
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ============ CI/CD ============
+.github/
+.gitlab-ci.yml
+.travis.yml
+
+# ============ Misc ============
+.serena/
+.mcp.json
+UI_DESIGN/
+images/
+food_examples/
